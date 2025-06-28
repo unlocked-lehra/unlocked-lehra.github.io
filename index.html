@@ -11,12 +11,16 @@
 
 
 <body>
-
-    <select id="instrument_selector" autocomplete="off"> </select>
-    <select id="taal_selector" autocomplete="off"> </select>
-    <select id="raag_selector" autocomplete="off"> </select>
-    <div> <button id="startLoop">Start</button> </div>
-    <div> <button id="stopLoop">Stop</button> </div>
+    <h1 style="text-align: center;">Unlocked Lehra Player</h1>
+    <div style="display: flex; gap: 1em; align-items: center; margin-bottom: 1em; justify-content: center;">
+        <select id="instrument_selector" autocomplete="off"></select>
+        <select id="taal_selector" autocomplete="off"></select>
+        <select id="raag_selector" autocomplete="off"></select>
+    </div>
+    <div style="display: flex; gap: 1em; align-items: center; margin-bottom: 1em; justify-content: center;">
+        <button id="startLoop">Start</button>
+        <button id="stopLoop">Stop</button>
+    </div>
 
     <script>
         // Populate instrument select from plist keys
