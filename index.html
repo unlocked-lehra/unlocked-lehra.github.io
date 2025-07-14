@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lehra</title>
-    <script src="assest_info.js"></script>
-    <script src="audio.js"></script>
 </head>
 
 
@@ -16,71 +14,16 @@
         <select id="instrument_selector" autocomplete="off"></select>
         <select id="taal_selector" autocomplete="off"></select>
         <select id="raag_selector" autocomplete="off"></select>
+        <select id="bpm_selector" autocomplete="off"></select>
     </div>
     <div style="display: flex; gap: 1em; align-items: center; margin-bottom: 1em; justify-content: center;">
-        <button id="startLoop">Start</button>
-        <button id="stopLoop">Stop</button>
+        <button id="start">Start</button>
+        <button id="stop">Stop</button>
     </div>
 
-    <script>
-        // Populate instrument select from plist keys
-        window.addEventListener('DOMContentLoaded', function () {
-            var select = document.getElementById('instrument_selector');
-            var taalSelect = document.getElementById('taal_selector');
-            var raagSelect = document.getElementById('raag_selector');
-            select.innerHTML = '';
-            if (typeof plist === 'object') {
-                var keys = Object.keys(plist);
-                keys.forEach(function (key) {
-                    var option = document.createElement('option');
-                    option.value = key;
-                    option.textContent = key;
-                    select.appendChild(option);
-                });
-                if (keys.length > 0) {
-                    select.value = keys[0];
-                }
-                populateTaalSelector(select.value);
-            }
-            select.addEventListener('change', function () {
-                populateTaalSelector(select.value);
-            });
-            taalSelect.addEventListener('change', function () {
-                populateRaagSelector(select.value, taalSelect.value);
-            });
-            function populateTaalSelector(instrument) {
-                taalSelect.innerHTML = '';
-                if (plist[instrument] && plist[instrument]['Taals']) {
-                    var taalKeys = Object.keys(plist[instrument]['Taals']);
-                    taalKeys.forEach(function (taal) {
-                        var option = document.createElement('option');
-                        option.value = taal;
-                        option.textContent = taal;
-                        taalSelect.appendChild(option);
-                    });
-                    if (taalKeys.length > 0) {
-                        taalSelect.value = taalKeys[0];
-                        populateRaagSelector(instrument, taalKeys[0]);
-                    }
-                }
-            }
-            function populateRaagSelector(instrument, taal) {
-                raagSelect.innerHTML = '';
-                if (plist[instrument] && plist[instrument]['Taals'] && plist[instrument]['Taals'][taal] && plist[instrument]['Taals'][taal]['Raags']) {
-                    var raagKeys = Object.keys(plist[instrument]['Taals'][taal]['Raags']);
-                    raagKeys.forEach(function (raag) {
-                        var option = document.createElement('option');
-                        option.value = raag;
-                        option.textContent = raag;
-                        raagSelect.appendChild(option);
-                    });
-                    if (raagKeys.length > 0) {
-                        raagSelect.value = raagKeys[0];
-                    }
-                }
-            }
-        });
-    </script>
+    <script src="assest_info.js"></script>
+    <script src="audio.js"></script>
+    <script src="main.js"></script>
 
 </body>
 

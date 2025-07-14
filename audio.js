@@ -1,49 +1,46 @@
-
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-let audioBuffer;
-let source;
-let loopStart = 5;
-let loopEnd = 10;
-
-// const loadButton = document.getElementById('load');
-const startLoopButton = document.getElementById('startLoop');
-const stopLoopButton = document.getElementById('stopLoop');
-
-async function loadAudio(audiofilename) {
-    if (audioContext.state === 'suspended') {
-        await audioContext.resume();
+class WebAudioLoopWrapper {
+    constructor(filename, startTime = 0, endTime = null, speed = 1.0) {
+        this.audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        this.source = null;
+        this.buffer = null;
+        this.filename = filename;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.speed = speed;
     }
 
-    const response = await fetch(`./assets/${encodeURIComponent(audiofilename)}`);
-    const arrayBuffer = await response.arrayBuffer();
-    audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-}
+    async load() {
+        const fname = `./assets/${encodeURIComponent(this.filename)}`
+        const response = await fetch(fname);
+        const arrayBuffer = await response.arrayBuffer();
+        this.buffer = await this.audioContext.decodeAudioData(arrayBuffer);
 
-function startLoop() {
-    if (!audioBuffer) {
-        alert('Load audio first!');
-        return;
+        // Default to buffer duration if endTime isn't set or is too large
+        if (!this.endTime || this.endTime > this.buffer.duration) {
+            this.endTime = this.buffer.duration;
+        }
     }
 
-    loopStart = lehra_info.loopStart;
-    loopEnd = lehra_info.loopEnd;
+    play() {
+        this.stop(); // In case something is already playing
 
-    source = audioContext.createBufferSource();
-    source.buffer = audioBuffer;
-    source.loop = true;
-    source.loopStart = loopStart;
-    source.loopEnd = loopEnd;
-    source.connect(audioContext.destination);
-    source.start(0, loopStart);
-}
+        this.source = this.audioContext.createBufferSource();
+        this.source.buffer = this.buffer;
+        this.source.playbackRate.value = this.speed;
 
-function stopLoop() {
-    if (source) {
-        source.stop();
-        source.disconnect();
+        this.source.loop = true;
+        this.source.loopStart = this.startTime;
+        this.source.loopEnd = this.endTime;
+
+        this.source.connect(this.audioContext.destination);
+        this.source.start(0, this.startTime); // Start from loopStart
+    }
+
+    stop() {
+        if (this.source) {
+            this.source.stop();
+            this.source.disconnect();
+            this.source = null;
+        }
     }
 }
-
-// loadButton.addEventListener('click', loadAudio);
-startLoopButton.addEventListener('click', startLoop);
-stopLoopButton.addEventListener('click', stopLoop);
