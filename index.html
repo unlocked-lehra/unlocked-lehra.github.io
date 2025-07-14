@@ -4,7 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lehra</title>
+    <title>Unlocked Lehra</title>
+    <style>
+        .big-select {
+            width: 320px;
+            height: 2.5em;
+            font-size: 1.2em;
+            padding-left: 1em;
+        }
+
+        .big-button {
+            padding: 0.6em 2em;
+            font-size: 1.2em;
+        }
+    </style>
 </head>
 
 
@@ -12,27 +25,28 @@
     <h1 style="text-align: center;">Unlocked Lehra Player</h1>
     <div id="selections"
         style="display: flex; flex-direction: column; align-items: center; gap: 1em; padding-bottom: 2em;">
-        <select id="instrument_selector" autocomplete="off" style="width: 220px;"></select>
-        <select id="taal_selector" autocomplete="off" style="width: 220px;"></select>
-        <select id="raag_selector" autocomplete="off" style="width: 220px;"></select>
-        <select id="bpm_selector" autocomplete="off" style="width: 220px;"></select>
+        <select id="instrument_selector" autocomplete="off" class="big-select"></select>
+        <select id="taal_selector" autocomplete="off" class="big-select"></select>
+        <select id="raag_selector" autocomplete="off" class="big-select"></select>
+        <select id="bpm_selector" autocomplete="off" class="big-select"></select>
     </div>
     <div style="display: flex; gap: 1em; align-items: center; margin-bottom: 1em; justify-content: center;">
-        <button id="start">Start</button>
-        <button id="stop">Stop</button>
+        <button id="start" class="big-button">Play</button>
+        <button id="stop" class="big-button">Pause</button>
     </div>
 
-    <script src="assest_info.js"></script>
-    <script src="audio.js"></script>
-    <script src="main.js"></script>
 
-    <footer style="text-align: center; margin-top: 2em; font-size: 0.9em; color: #888;">
+    <footer style="text-align: center; margin-top: 2em; font-size: 0.9em;">
         <p>
             Disclaimer: This tool is provided as-is, with no guarantee of accuracy, completeness, or fitness for any
             particular purpose. Use at your own risk. The author is not responsible for any errors, omissions, or
             consequences arising from the use of this application.
         </p>
     </footer>
+
+    <script src="assest_info.js"></script>
+    <script src="audio.js"></script>
+    <script src="main.js"></script>
 </body>
 
 </html>
